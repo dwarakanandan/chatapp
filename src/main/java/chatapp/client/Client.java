@@ -40,9 +40,9 @@ public class Client {
             outputStream.writeUTF(SharedUtil.CONTROL_MESSAGE + "_" +SharedUtil.NAME_REQUEST + "_" + this.clientName);
             
             System.out.println();
-            System.out.println(ClientMain.TAG + "To retrive client list:  Type CLIENT_LIST");
-            System.out.println(ClientMain.TAG + "To connect to a client:  Type FRIEND_<CLIENT_NAME>");
-            System.out.println(ClientMain.TAG + "To disconnect from chat:  Type EXIT_CHAT");
+            System.out.println(ClientMain.TAG + "To retrive client list:     Type CLIENT_LIST");
+            System.out.println(ClientMain.TAG + "To connect to a client:     Type FRIEND_<CLIENT_NAME>");
+            System.out.println(ClientMain.TAG + "To disconnect from client:  Type EXIT_CHAT");
             System.out.println();
             
             DataInputThread dataInputThread = new DataInputThread(this, outputStream);

@@ -22,7 +22,6 @@ public class DataInputThread implements Runnable {
     public void run() {
         BufferedReader inputBufferedReader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println(getTag() + "Moinitoring STANDARD_INPUT");
-        System.out.println();
 
         try {
             while (true) {

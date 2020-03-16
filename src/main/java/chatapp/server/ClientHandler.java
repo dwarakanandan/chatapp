@@ -42,11 +42,13 @@ public class ClientHandler implements Runnable {
 
             while (true) {
                 line = inputStream.readUTF();
-                System.out.println(getTag() + line);
+                
 
                 if (line.startsWith(SharedUtil.CONTROL_MESSAGE)) {
+                    System.out.println(getTag() + line);
                     controlMessageRouter(line);
                 } else {
+                    System.out.println(getTag() + " [MESSAGE_TRANSFER] :"+ line);
                     friendClientInfo.getOutputStream().writeUTF(line);
                 }
 
@@ -93,6 +95,7 @@ public class ClientHandler implements Runnable {
         this.clientInfo.setBusy(false);
         if (this.friendClientInfo != null) {
             try {
+                friendClientInfo.setBusy(false);
                 friendClientInfo.getOutputStream()
                         .writeUTF(SharedUtil.CONTROL_MESSAGE + "_" + SharedUtil.FRIEND_DISCONNECTED);
             } catch (IOException e1) {
@@ -128,6 +131,7 @@ public class ClientHandler implements Runnable {
 
     private void sendClientList() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(SharedUtil.CONTROL_MESSAGE + "_CLIENT_LIST\n");
         stringBuilder.append("Number of clients online: " + clientSet.size() + "\n");
         for (Long handlerThread: clientSet.keySet()) {
             ClientInfo tempClientInfo = clientSet.get(handlerThread);
@@ -135,7 +139,7 @@ public class ClientHandler implements Runnable {
             if (tempClientInfo.getBusy()) {
                 statusString = "busy";
             }
-            stringBuilder.append("*" + tempClientInfo.getClientName() + " [" +statusString + "]\n");
+            stringBuilder.append("* " + tempClientInfo.getClientName() + " [" +statusString + "]\n");
         }
         outputStream.writeUTF(stringBuilder.toString());
     }

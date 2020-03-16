@@ -95,9 +95,10 @@ public class ClientHandler implements Runnable {
         this.clientInfo.setBusy(false);
         if (this.friendClientInfo != null) {
             try {
-                friendClientInfo.setBusy(false);
-                friendClientInfo.getOutputStream()
+                this.friendClientInfo.setBusy(false);
+                this.friendClientInfo.getOutputStream()
                         .writeUTF(SharedUtil.CONTROL_MESSAGE + "_" + SharedUtil.FRIEND_DISCONNECTED);
+                this.friendClientInfo = null;
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -131,7 +132,7 @@ public class ClientHandler implements Runnable {
 
     private void sendClientList() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(SharedUtil.CONTROL_MESSAGE + "_CLIENT_LIST\n");
+        stringBuilder.append(SharedUtil.CONTROL_MESSAGE + "_" + SharedUtil.CLIENT_LIST_RESPONSE + "\n");
         stringBuilder.append("Number of clients online: " + clientSet.size() + "\n");
         for (Long handlerThread: clientSet.keySet()) {
             ClientInfo tempClientInfo = clientSet.get(handlerThread);

@@ -39,6 +39,9 @@ public class DataOutputThread implements Runnable {
     }
 
     private void controlMessageRouter(String line) {
+        if (line.contains(SharedUtil.CLIENT_LIST_RESPONSE)) {
+            System.out.println(getTag() + line);
+        }
         if (line.contains(SharedUtil.FRIEND_CONNECTED)) {
             this.client.setFriendConnected(true);
             String[] split = line.split("_");
